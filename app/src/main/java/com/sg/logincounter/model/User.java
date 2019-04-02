@@ -6,12 +6,32 @@ public class User {
     private String password;
     private Integer id;
     private Integer counter;
+    private String email;
 
-    public User(String name, String password, Integer id, Integer counter) {
+    public static final String TABLE_NAME = "users";
+    public static final String COLUMN_ID = "user_id";
+    public static final String COLUMN_NAME = "user_name";
+    public static final String COLUMN_EMAIL = "user_email";
+    public static final String COLUMN_PASSWORD = "user_pswrd";
+
+    public User(String name, String password,String email, Integer id, Integer counter) {
         this.name = name;
         this.password = password;
         this.id = id;
         this.counter = counter;
+        this.email=email;
+    }
+
+    public User()
+    {
+
+    }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getName() {
@@ -45,4 +65,11 @@ public class User {
     public void setCounter(Integer counter) {
         this.counter = counter;
     }
+    public static final String CREATE_TABLE =
+            "CREATE TABLE " + TABLE_NAME + "("
+                    + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + COLUMN_NAME + " TEXT,"
+                    + COLUMN_EMAIL + " DATETIME DEFAULT CURRENT_TIMESTAMP,"
+                    + COLUMN_PASSWORD + "TEXT"
+                    + ")";
 }
