@@ -18,12 +18,6 @@
         app:srcCompat="@drawable/free2"
         tools:ignore="contentDescription" />
 
-    <ProgressBar
-        android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="49dp"
-        android:layout_height="44dp"
-        android:layout_gravity="center" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_name"
@@ -79,7 +73,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/signupbutton"
+        android:id="@+id/signupbutton2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_64x"

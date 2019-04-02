@@ -14,10 +14,11 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
+    public static int ide;
 
 
-    private static final String DATABASE_NAME = "user_db";
+    private static final String DATABASE_NAME = "users";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -46,6 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(User.COLUMN_NAME, name);
         values.put(User.COLUMN_EMAIL, email);
         values.put(User.COLUMN_PASSWORD,password);
+        values.put(User.COLUMN_COUNTER,1);
         long id = db.insert(User.TABLE_NAME, null, values);
         db.close();
         return id;
@@ -83,12 +85,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         {return false;}
     }
 
+    public User getUser(String email)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM " + User.TABLE_NAME.trim()
+                + " WHERE " + User.COLUMN_EMAIL.trim() + "='" + email.trim() + "'";
+        Cursor cursor = db.rawQuery(sql, null);
+        User user = new User();
+
+        if (cursor.moveToFirst()) {
+            user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(User.COLUMN_ID))));
+            user.setName(cursor.getString(cursor.getColumnIndex(User.COLUMN_NAME)));
+            user.setPassword(cursor.getString(cursor.getColumnIndex(User.COLUMN_PASSWORD)));
+            user.setEmail(cursor.getString(cursor.getColumnIndex(User.COLUMN_EMAIL)));
+            user.setCounter(Integer.parseInt(cursor.getString(cursor.getColumnIndex(User.COLUMN_COUNTER))));
+        }
+        cursor.close();
+        db.close();
+        return user;
+    }
+
     public List<User> getAllUsers() {
         String[] columns = {
                 User.COLUMN_ID,
                 User.COLUMN_NAME,
                 User.COLUMN_EMAIL,
-                User.COLUMN_PASSWORD
+                User.COLUMN_PASSWORD,
+                User.COLUMN_COUNTER
         };
 
         String sortOrder =
@@ -110,6 +133,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 user.setName(cursor.getString(cursor.getColumnIndex(User.COLUMN_NAME)));
                 user.setEmail(cursor.getString(cursor.getColumnIndex(User.COLUMN_EMAIL)));
                 user.setPassword(cursor.getString(cursor.getColumnIndex(User.COLUMN_PASSWORD)));
+                user.setCounter(Integer.parseInt(cursor.getString(cursor.getColumnIndex(User.COLUMN_COUNTER))));
                 userList.add(user);
             } while (cursor.moveToNext());
         }
@@ -125,7 +149,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(User.COLUMN_NAME, user.getName());
         values.put(User.COLUMN_EMAIL, user.getEmail());
         values.put(User.COLUMN_PASSWORD, user.getPassword());
-
+        values.put(User.COLUMN_COUNTER,user.getCounter());
         db.update(User.TABLE_NAME, values, User.COLUMN_ID+ " = ?",
                 new String[]{String.valueOf(user.getId())});
         db.close();

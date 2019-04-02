@@ -68,8 +68,7 @@
         android:text="@string/login"
         android:background="@color/design_default_color_primary_dark"
         android:foreground="?attr/selectableItemBackgroundBorderless"
-        android:textColor="@color/white"
-        tools:targetApi="m" />
+        android:textColor="@color/white" />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/signupbutton"

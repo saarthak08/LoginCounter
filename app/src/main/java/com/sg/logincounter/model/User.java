@@ -5,7 +5,7 @@ public class User {
     private String name;
     private String password;
     private Integer id;
-    private Integer counter;
+    private Integer counter=0;
     private String email;
 
     public static final String TABLE_NAME = "users";
@@ -13,6 +13,7 @@ public class User {
     public static final String COLUMN_NAME = "user_name";
     public static final String COLUMN_EMAIL = "user_email";
     public static final String COLUMN_PASSWORD = "user_pswrd";
+    public static final String COLUMN_COUNTER="user_counter";
 
     public User(String name, String password,String email, Integer id, Integer counter) {
         this.name = name;
@@ -25,6 +26,10 @@ public class User {
     public User()
     {
 
+    }
+    public  void updateCounter()
+    {
+        counter++;
     }
     public String getEmail() {
         return email;
@@ -70,6 +75,7 @@ public class User {
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COLUMN_NAME + " TEXT,"
                     + COLUMN_EMAIL + " DATETIME DEFAULT CURRENT_TIMESTAMP,"
-                    + COLUMN_PASSWORD + "TEXT"
+                    + COLUMN_PASSWORD + " TEXT,"
+                    + COLUMN_COUNTER + " INTEGER"
                     + ")";
 }
